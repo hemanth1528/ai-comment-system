@@ -1,0 +1,5 @@
+flask
+flask_sqlalchemy
+deep-translator
+textblob
+gunicorn
