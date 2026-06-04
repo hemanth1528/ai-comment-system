@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Watch Video</title>
+
+    <style>
+
+        body{
+            margin:0;
+            background:black;
+            color:white;
+            font-family:Arial;
+        }
+
+        .navbar{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:25px 60px;
+            background:rgba(0,0,0,0.95);
+            position:fixed;
+            width:100%;
+            z-index:100;
+        }
+
+        .logo{
+            color:red;
+            font-size:42px;
+            font-weight:bold;
+        }
+
+        .plan{
+            margin-right:120px;
+            font-size:25px;
+            color:#aaa;
+        }
+
+        .container{
+            padding-top:120px;
+            width:90%;
+            margin:auto;
+        }
+
+        .video-box{
+            background:#111;
+            border-radius:25px;
+            padding:30px;
+            box-shadow:0 0 40px rgba(255,0,0,0.2);
+        }
+
+        video{
+            width:100%;
+            border-radius:20px;
+        }
+
+        .timer{
+            margin-top:20px;
+            font-size:30px;
+            color:red;
+            font-weight:bold;
+        }
+
+        .blocked{
+            margin-top:20px;
+            background:red;
+            padding:20px;
+            border-radius:15px;
+            font-size:25px;
+        }
+
+        a{
+            color:white;
+            text-decoration:none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <div class="logo">
+            AI STREAM
+        </div>
+
+        <div class="plan">
+            Current Plan:
+            {{plan}}
+        </div>
+
+    </div>
+
+    <div class="container">
+
+        <div class="video-box">
+
+            <video id="videoPlayer" controls autoplay>
+
+                <source
+                    src="{{ url_for('static', filename='uploads/' + filename) }}"
+                    type="video/mp4">
+
+            </video>
+
+            <div class="timer">
+
+                Watch Time Left:
+                <span id="time"></span>
+
+            </div>
+
+            <div id="blocked"></div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        let seconds = {{limit}};
+
+        let video = document.getElementById("videoPlayer");
+
+        let timeText = document.getElementById("time");
+
+        let blocked = document.getElementById("blocked");
+
+        function updateTimer(){
+
+            let mins = Math.floor(seconds / 60);
+
+            let secs = seconds % 60;
+
+            timeText.innerHTML =
+                mins + "m " + secs + "s";
+
+            if(seconds <= 0){
+
+                video.pause();
+
+                blocked.innerHTML = `
+                    <div class="blocked">
+
+                    Watch limit reached.<br><br>
+
+                    Upgrade your plan for more watch time.
+
+                    <br><br>
+
+                    <a href="/premium">
+
+                    Go Premium
+
+                    </a>
+
+                    </div>
+                `;
+
+                return;
+            }
+
+            seconds--;
+
+        }
+
+        setInterval(updateTimer,1000);
+
+// ================= GESTURE CONTROLS =================
+
+let clickCount = 0;
+let clickTimer = null;
+
+video.addEventListener("click", function(e){
+
+    clickCount++;
+
+    let x = e.offsetX;
+    let width = video.clientWidth;
+
+    let zone = "center";
+
+    if(x < width/3){
+        zone = "left";
+    }
+    else if(x > (width*2)/3){
+        zone = "right";
+    }
+
+    clearTimeout(clickTimer);
+
+    clickTimer = setTimeout(function(){
+
+        // SINGLE TAP CENTER
+        if(clickCount == 1 && zone == "center"){
+
+            if(video.paused){
+                video.play();
+            }
+            else{
+                video.pause();
+            }
+        }
+
+        // DOUBLE TAP LEFT
+        if(clickCount == 2 && zone == "left"){
+
+            video.currentTime -= 10;
+        }
+
+        // DOUBLE TAP RIGHT
+        if(clickCount == 2 && zone == "right"){
+
+            video.currentTime += 10;
+        }
+
+        // TRIPLE TAP CENTER
+        if(clickCount == 3 && zone == "center"){
+
+            window.location.href="/videos";
+        }
+
+        // TRIPLE TAP LEFT
+        if(clickCount == 3 && zone == "left"){
+
+            window.location.href="/comments";
+        }
+
+        // TRIPLE TAP RIGHT
+        if(clickCount == 3 && zone == "right"){
+
+            alert("Close Website Gesture Activated");
+
+            window.close();
+        }
+
+        clickCount = 0;
+
+    },400);
+
+});
+
+
+    </script>
+
+</body>
+
+</html>

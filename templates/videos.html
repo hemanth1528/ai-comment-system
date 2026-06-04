@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>AI STREAM Videos</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial;
+        }
+
+        body{
+            background:#050505;
+            color:white;
+            overflow-x:hidden;
+        }
+
+        /* NAVBAR */
+
+        .navbar{
+
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+
+            padding:18px 70px;
+
+            background:rgba(0,0,0,0.82);
+
+            position:fixed;
+
+            width:100%;
+
+            top:0;
+            left:0;
+
+            z-index:1000;
+
+            backdrop-filter:blur(18px);
+
+            border-bottom:
+            1px solid rgba(255,255,255,0.04);
+        }
+
+        .logo{
+
+            color:#ff2d2d;
+
+            font-size:28px;
+
+            font-weight:900;
+
+            letter-spacing:-0.7px;
+
+            text-shadow:
+            0 0 12px rgba(255,0,0,0.28);
+        }
+
+        .nav-links{
+
+            display:flex;
+
+            align-items:center;
+
+            gap:46px;
+        }
+
+        .nav-links a{
+
+            color:#f5f5f5;
+
+            text-decoration:none;
+
+            font-size:17px;
+
+            font-weight:800;
+
+            letter-spacing:-0.3px;
+
+            position:relative;
+
+            transition:0.25s;
+        }
+
+        .nav-links a:hover{
+
+            color:#ff3838;
+        }
+
+        .nav-links a::after{
+
+            content:"";
+
+            position:absolute;
+
+            left:0;
+            bottom:-9px;
+
+            width:0%;
+
+            height:3px;
+
+            border-radius:10px;
+
+            background:#ff2d2d;
+
+            transition:0.25s;
+        }
+
+        .nav-links a:hover::after{
+
+            width:100%;
+        }
+
+        .space{
+            height:90px;
+        }
+
+        /* HERO */
+
+        .hero{
+
+            height:42vh;
+
+            background:
+            linear-gradient(
+                to top,
+                black,
+                rgba(0,0,0,0.35)
+            ),
+
+            url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba');
+
+            background-size:cover;
+            background-position:center;
+
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+
+            padding-left:70px;
+        }
+
+        .hero h1{
+
+            font-size:58px;
+
+            margin-bottom:18px;
+        }
+
+        .hero p{
+
+            font-size:20px;
+
+            width:620px;
+
+            color:#d0d0d0;
+
+            line-height:1.7;
+        }
+
+        /* UPLOAD SECTION */
+
+        .upload-section{
+
+            width:92%;
+
+            margin:45px auto;
+
+            background:
+            linear-gradient(
+                145deg,
+                #111,
+                #181818
+            );
+
+            padding:35px;
+
+            border-radius:24px;
+
+            box-shadow:
+            0 0 30px rgba(255,0,0,0.08);
+        }
+
+        .upload-title{
+
+            font-size:34px;
+
+            margin-bottom:28px;
+
+            color:red;
+
+            font-weight:bold;
+        }
+
+        .upload-form{
+
+            display:flex;
+
+            gap:18px;
+
+            flex-wrap:wrap;
+        }
+
+        .upload-form input{
+
+            flex:1;
+
+            min-width:230px;
+
+            padding:16px;
+
+            border:none;
+
+            border-radius:14px;
+
+            background:#222;
+
+            color:white;
+
+            font-size:16px;
+        }
+
+        .upload-form button{
+
+            background:red;
+
+            color:white;
+
+            border:none;
+
+            border-radius:14px;
+
+            padding:16px 34px;
+
+            font-size:16px;
+
+            font-weight:bold;
+
+            cursor:pointer;
+
+            transition:0.3s;
+        }
+
+        .upload-form button:hover{
+
+            transform:scale(1.04);
+        }
+
+        /* SECTION TITLE */
+
+        .section-title{
+
+            font-size:42px;
+
+            margin:55px;
+
+            margin-bottom:25px;
+        }
+
+        /* VIDEO GRID */
+
+        .videos-grid{
+
+            width:92%;
+
+            margin:auto;
+
+            display:grid;
+
+            grid-template-columns:
+            repeat(auto-fit,minmax(280px,320px));
+
+            justify-content:flex-start;
+
+            gap:28px;
+
+            padding-bottom:80px;
+        }
+
+        /* VIDEO CARD */
+
+        .video-card{
+
+            background:
+            linear-gradient(
+                145deg,
+                #101010,
+                #1a1a1a
+            );
+
+            border-radius:22px;
+
+            overflow:hidden;
+
+            transition:0.35s;
+
+            box-shadow:
+            0 0 22px rgba(255,0,0,0.08);
+        }
+
+        .video-card:hover{
+
+            transform:
+            translateY(-6px);
+
+            box-shadow:
+            0 0 35px rgba(255,0,0,0.2);
+        }
+
+        .video-card video{
+
+            width:100%;
+
+            height:180px;
+
+            object-fit:cover;
+        }
+
+        .video-info{
+            padding:22px;
+        }
+
+        .video-title{
+
+            font-size:22px;
+
+            margin-bottom:18px;
+
+            font-weight:bold;
+        }
+
+        /* BUTTONS */
+
+        .video-buttons{
+
+            display:flex;
+
+            gap:14px;
+        }
+
+        .watch-btn{
+
+            flex:1;
+
+            background:red;
+
+            color:white;
+
+            border:none;
+
+            border-radius:12px;
+
+            padding:14px;
+
+            font-size:16px;
+
+            font-weight:bold;
+
+            cursor:pointer;
+
+            transition:0.3s;
+        }
+
+        .watch-btn:hover{
+
+            transform:scale(1.04);
+        }
+
+        .download-btn{
+
+            flex:1;
+
+            background:#222;
+
+            color:white;
+
+            border:none;
+
+            border-radius:12px;
+
+            padding:14px;
+
+            font-size:16px;
+
+            font-weight:bold;
+
+            cursor:pointer;
+
+            transition:0.3s;
+        }
+
+        .download-btn:hover{
+
+            background:#333;
+        }
+
+        a{
+            text-decoration:none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <div class="logo">
+
+            AI STREAM
+
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/">Home</a>
+
+            <a href="/comments">Comments</a>
+
+            <a href="/videos">Videos</a>
+
+            <a href="/downloads">Downloads</a>
+
+            <a href="/premium">Premium</a>
+
+        </div>
+
+    </div>
+
+    <div class="space"></div>
+
+    <!-- HERO -->
+
+    <div class="hero">
+
+        <h1>
+
+            Unlimited Entertainment
+
+        </h1>
+
+        <p>
+
+            Experience premium streaming,
+            AI-powered features and next-generation
+            OTT platform technology.
+
+        </p>
+
+    </div>
+
+    <!-- UPLOAD -->
+
+    <div class="upload-section">
+
+        <div class="upload-title">
+
+            Upload Video
+
+        </div>
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+            class="upload-form">
+
+            <input
+                type="text"
+                name="title"
+                placeholder="Enter video title"
+                required>
+
+            <input
+                type="file"
+                name="video"
+                required>
+
+            <button type="submit">
+
+                Upload
+
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- TITLE -->
+
+    <div class="section-title">
+
+        Trending Videos
+
+    </div>
+
+    <!-- VIDEOS -->
+
+    <div class="videos-grid">
+
+        {% for video in videos %}
+
+        <div class="video-card">
+
+            <video controls>
+
+                <source
+                    src="{{ url_for('static',
+                    filename='uploads/' + video.filename) }}"
+                    type="video/mp4">
+
+            </video>
+
+            <div class="video-info">
+
+                <div class="video-title">
+
+                    {{video.title}}
+
+                </div>
+
+                <div class="video-buttons">
+
+                    <a href="/watch/{{video.filename}}">
+
+                        <button class="watch-btn">
+
+                            ▶ Watch
+
+                        </button>
+
+                    </a>
+
+                    <a href="/download/{{video.filename}}">
+
+                        <button class="download-btn">
+
+                            ⬇ Download
+
+                        </button>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</body>
+
+</html>

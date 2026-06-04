@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Premium Plans</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial;
+        }
+
+        body{
+            background:#050505;
+            color:white;
+            overflow-x:hidden;
+        }
+
+        /* NAVBAR */
+
+        .navbar{
+
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+
+            padding:18px 70px;
+
+            background:rgba(0,0,0,0.82);
+
+            position:fixed;
+
+            width:100%;
+
+            top:0;
+            left:0;
+
+            z-index:1000;
+
+            backdrop-filter:blur(18px);
+
+            border-bottom:
+            1px solid rgba(255,255,255,0.04);
+        }
+
+        .logo{
+
+            color:#ff2d2d;
+
+            font-size:28px;
+
+            font-weight:900;
+
+            letter-spacing:-0.7px;
+
+            text-shadow:
+            0 0 12px rgba(255,0,0,0.28);
+        }
+
+        .nav-links{
+
+            display:flex;
+
+            align-items:center;
+
+            gap:46px;
+        }
+
+        .nav-links a{
+
+            color:#f5f5f5;
+
+            text-decoration:none;
+
+            font-size:17px;
+
+            font-weight:800;
+
+            letter-spacing:-0.3px;
+
+            position:relative;
+
+            transition:0.25s;
+        }
+
+        .nav-links a:hover{
+
+            color:#ff3838;
+        }
+
+        .nav-links a::after{
+
+            content:"";
+
+            position:absolute;
+
+            left:0;
+            bottom:-9px;
+
+            width:0%;
+
+            height:3px;
+
+            border-radius:10px;
+
+            background:#ff2d2d;
+
+            transition:0.25s;
+        }
+
+        .nav-links a:hover::after{
+
+            width:100%;
+        }
+
+        .space{
+            height:90px;
+        }
+
+        /* HERO */
+
+        .hero{
+
+            height:34vh;
+
+            background:
+
+            linear-gradient(
+                to top,
+                black,
+                rgba(0,0,0,0.35)
+            ),
+
+            url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba');
+
+            background-size:cover;
+            background-position:center;
+
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+
+            padding-left:70px;
+        }
+
+        .hero h1{
+
+            font-size:52px;
+
+            margin-bottom:14px;
+        }
+
+        .hero p{
+
+            font-size:18px;
+
+            color:#ccc;
+
+            width:600px;
+
+            line-height:1.7;
+        }
+
+        /* CONTAINER */
+
+        .container{
+
+            width:90%;
+
+            margin:auto;
+
+            padding-top:50px;
+            padding-bottom:80px;
+        }
+
+        .current-plan{
+
+            background:
+            linear-gradient(
+                145deg,
+                #111,
+                #1b1b1b
+            );
+
+            padding:24px;
+
+            border-radius:22px;
+
+            margin-bottom:45px;
+
+            font-size:22px;
+
+            box-shadow:
+            0 0 25px rgba(255,0,0,0.08);
+        }
+
+        .plans{
+
+            display:grid;
+
+            grid-template-columns:
+            repeat(auto-fit,minmax(280px,1fr));
+
+            gap:30px;
+        }
+
+        .plan-card{
+
+            background:
+            linear-gradient(
+                145deg,
+                #111,
+                #1a1a1a
+            );
+
+            border-radius:26px;
+
+            padding:35px;
+
+            transition:0.35s;
+
+            box-shadow:
+            0 0 25px rgba(255,0,0,0.08);
+        }
+
+        .plan-card:hover{
+
+            transform:
+            translateY(-8px);
+
+            box-shadow:
+            0 0 40px rgba(255,0,0,0.22);
+        }
+
+        .plan-name{
+
+            font-size:32px;
+
+            color:red;
+
+            margin-bottom:18px;
+
+            font-weight:bold;
+        }
+
+        .price{
+
+            font-size:38px;
+
+            margin-bottom:20px;
+
+            font-weight:bold;
+        }
+
+        .features{
+
+            color:#bbb;
+
+            font-size:16px;
+
+            line-height:1.9;
+
+            margin-bottom:35px;
+        }
+
+        .upgrade-btn{
+
+            width:100%;
+
+            background:
+            linear-gradient(
+                135deg,
+                #ff1a1a,
+                #b30000
+            );
+
+            color:white;
+
+            border:none;
+
+            border-radius:16px;
+
+            padding:15px;
+
+            font-size:16px;
+
+            font-weight:bold;
+
+            cursor:pointer;
+
+            transition:0.35s;
+        }
+
+        .upgrade-btn:hover{
+
+            transform:scale(1.03);
+
+            box-shadow:
+            0 0 22px rgba(255,0,0,0.35);
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <div class="logo">
+
+            AI STREAM
+
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/">Home</a>
+
+            <a href="/comments">Comments</a>
+
+            <a href="/videos">Videos</a>
+
+            <a href="/downloads">Downloads</a>
+
+            <a href="/premium">Premium</a>
+
+        </div>
+
+    </div>
+
+    <div class="space"></div>
+
+    <!-- HERO -->
+
+    <div class="hero">
+
+        <h1>
+
+            Upgrade Your Plan
+
+        </h1>
+
+        <p>
+
+            Unlock premium entertainment,
+            longer watch time and
+            unlimited streaming experience.
+
+        </p>
+
+    </div>
+
+    <!-- MAIN -->
+
+    <div class="container">
+
+        <div class="current-plan">
+
+            Current Plan:
+            <span style="color:red;">
+                {{plan}}
+            </span>
+
+        </div>
+
+        <div class="plans">
+
+            <div class="plan-card">
+
+                <div class="plan-name">
+                    Bronze
+                </div>
+
+                <div class="price">
+                    ₹10
+                </div>
+
+                <div class="features">
+
+                    ✓ 7 Minutes Watch Time<br>
+                    ✓ Premium Streaming<br>
+                    ✓ Better Experience
+
+                </div>
+
+                <a href="/upgrade/Bronze">
+
+                    <button class="upgrade-btn">
+
+                        Upgrade
+
+                    </button>
+
+                </a>
+
+            </div>
+
+            <div class="plan-card">
+
+                <div class="plan-name">
+                    Silver
+                </div>
+
+                <div class="price">
+                    ₹50
+                </div>
+
+                <div class="features">
+
+                    ✓ 10 Minutes Watch Time<br>
+                    ✓ HD Streaming<br>
+                    ✓ Premium Features
+
+                </div>
+
+                <a href="/upgrade/Silver">
+
+                    <button class="upgrade-btn">
+
+                        Upgrade
+
+                    </button>
+
+                </a>
+
+            </div>
+
+            <div class="plan-card">
+
+                <div class="plan-name">
+                    Gold
+                </div>
+
+                <div class="price">
+                    ₹100
+                </div>
+
+                <div class="features">
+
+                    ✓ Unlimited Watch Time<br>
+                    ✓ Unlimited Downloads<br>
+                    ✓ Full Premium Access
+
+                </div>
+
+                <a href="/upgrade/Gold">
+
+                    <button class="upgrade-btn">
+
+                        Upgrade
+
+                    </button>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

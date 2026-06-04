@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>AI STREAM Call</title>
+
+<style>
+
+body{
+    margin:0;
+    background:black;
+    color:white;
+    font-family:Arial;
+    text-align:center;
+}
+
+h1{
+    color:red;
+    margin-top:30px;
+}
+
+.video-container{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    margin-top:30px;
+}
+
+video{
+    width:45%;
+    height:350px;
+    background:#111;
+    border-radius:20px;
+    border:2px solid red;
+}
+
+.buttons{
+    margin-top:30px;
+}
+
+button{
+    padding:15px 30px;
+    margin:10px;
+    border:none;
+    border-radius:12px;
+    background:red;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#ff3333;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>AI STREAM VIDEO CALL</h1>
+
+<div class="video-container">
+
+    <video id="localVideo" autoplay muted></video>
+
+    <video id="remoteVideo" autoplay></video>
+
+</div>
+
+<div class="buttons">
+
+    <button onclick="startCamera()">
+        Start Camera
+    </button>
+
+    <button onclick="stopCamera()">
+        Stop Camera
+    </button>
+
+    <button onclick="shareScreen()">
+        Share Screen
+    </button>
+
+    <button onclick="startRecording()">
+        Start Recording
+    </button>
+
+    <button onclick="stopRecording()">
+        Stop Recording
+    </button>
+
+</div>
+
+<script>
+
+let localVideo =
+document.getElementById("localVideo");
+
+let stream;
+
+let recorder;
+
+let chunks = [];
+
+async function startCamera(){
+
+    stream =
+    await navigator.mediaDevices.getUserMedia({
+        video:true,
+        audio:true
+    });
+
+    localVideo.srcObject = stream;
+}
+
+function stopCamera(){
+
+    if(stream){
+
+        stream.getTracks().forEach(track => {
+
+            track.stop();
+
+        });
+
+        localVideo.srcObject = null;
+
+        alert("Camera Stopped");
+    }
+}
+
+async function shareScreen(){
+
+    let screen =
+    await navigator.mediaDevices.getDisplayMedia({
+        video:true
+    });
+
+    localVideo.srcObject = screen;
+}
+
+function startRecording(){
+
+    if(!stream){
+
+        alert("Start camera first");
+
+        return;
+    }
+
+    chunks = [];
+
+    recorder =
+    new MediaRecorder(stream);
+
+    recorder.ondataavailable =
+    e => chunks.push(e.data);
+
+    recorder.start();
+
+    alert("Recording Started");
+}
+
+function stopRecording(){
+
+    if(!recorder){
+
+        alert("Recording not started");
+
+        return;
+    }
+
+    recorder.stop();
+
+    recorder.onstop = function(){
+
+        let blob =
+        new Blob(chunks,{
+            type:"video/webm"
+        });
+
+        let url =
+        URL.createObjectURL(blob);
+
+        let a =
+        document.createElement("a");
+
+        a.href = url;
+
+        a.download =
+        "AI_STREAM_CALL.webm";
+
+        a.click();
+    };
+
+    alert("Recording Saved");
+}
+
+</script>
+
+</body>
+
+</html>

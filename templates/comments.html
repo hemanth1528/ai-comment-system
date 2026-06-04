@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Comments</title>
+
+<link rel="stylesheet" href="/static/style.css">
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+<div class="logo">AI STREAM</div>
+
+<div class="nav-links">
+
+<a href="/">Home</a>
+<a href="/comments">Comments</a>
+<a href="/videos">Videos</a>
+<a href="/downloads">Downloads</a>
+
+</div>
+
+</div>
+
+<div class="container">
+
+<div class="card">
+
+<h1>AI Smart Comments</h1>
+
+<form method="POST">
+
+<input
+type="text"
+name="text"
+placeholder="Enter comment"
+required
+>
+
+<input
+type="text"
+name="city"
+placeholder="Enter city"
+required
+>
+
+<button type="submit">
+
+Post Comment
+
+</button>
+
+</form>
+
+</div>
+
+{% for comment in comments %}
+
+<div class="comment-box">
+
+<h2>{{ comment.text }}</h2>
+
+<p>📍 {{ comment.city }}</p>
+
+<p>
+
+👍 {{ comment.likes }}
+
+|
+
+👎 {{ comment.dislikes }}
+
+</p>
+
+<a href="/like/{{ comment.id }}">
+
+<button>Like</button>
+
+</a>
+
+<a href="/dislike/{{ comment.id }}">
+
+<button>Dislike</button>
+
+</a>
+
+<a href="/translate/{{ comment.id }}">
+
+<button>Translate</button>
+
+</a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</body>
+
+</html>
